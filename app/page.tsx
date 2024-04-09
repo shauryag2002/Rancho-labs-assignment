@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import './home.css';
 import { FaCheck } from "react-icons/fa";
 import { GrPowerReset } from "react-icons/gr";
+import Image from 'next/image';
 interface Item {
   id: number;
   name: string;
@@ -112,7 +113,7 @@ const Home = () => {
                 className='source1'
               >
                 <div className="card">
-                  <img src={item.img} className='cardImg' />
+                  <Image src={item.img} height={129.91} width={69} alt={item.name} />
                   <span>{item.name}</span>
                 </div>
               </div>
@@ -135,7 +136,7 @@ const Home = () => {
                 className='source2'
               >
                 <div className="card">
-                  <img src={item.img} className='cardImg' />
+                  <Image src={item.img} height={129.91} width={69} alt={item.name} />
                   <span>{item.name}</span>
                 </div>
               </div>
@@ -159,7 +160,7 @@ const Home = () => {
                 className='source3'
               >
                 <div className="card">
-                  <img src={item.img} className='cardImg' />
+                  <Image src={item.img} height={129.91} width={69} alt={item.name} />
                   <span>{item.name}</span>
                 </div>
               </div>
@@ -178,7 +179,7 @@ const Home = () => {
               onDragStart={(e) => onDragStart(e, 'right', index)}
             >
               <div className="card">
-                <img src={item.img} className='cardImg' />
+                <Image src={item.img} height={129.91} width={69} alt={item.name} />
                 <span>{item.name}</span>
               </div>
             </div>
