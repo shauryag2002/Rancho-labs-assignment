@@ -1,0 +1,160 @@
+.main {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  margin-top: 5px;
+  gap: 15px;
+  touch-action: none;
+  overflow: auto;
+}
+
+.left {
+  width: 779px;
+  height: 685px;
+  /* border: 2px solid black; */
+  box-shadow: 0px 0px 10px 1px rgba(157, 176, 201, 0.75);
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  padding-top: 20px;
+  touch-action: none;
+}
+
+.right {
+  width: 706px;
+  height: 685px;
+  /* border: 2px solid black; */
+  box-shadow: 0px 0px 10px 1px rgba(157, 176, 201, 0.75);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 40px;
+  /* padding-top: 20px; */
+  justify-content: center;
+  align-items: center;
+  touch-action: none
+}
+
+.green {
+  box-shadow: 0px 0px 10px 1px rgba(29, 222, 38, 1) !important;
+}
+
+.red {
+  box-shadow: 0px 0px 10px 1px rgba(224, 29, 29, 1) !important;
+}
+
+.buttons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* margin: auto; */
+  gap: 10px;
+}
+
+.check {
+  background-color: #58CC02;
+  color: white;
+  padding: 5.09px 12.73px 5.09px 12.73px;
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+}
+
+.reset {
+  padding: 5.09px 12.73px 5.09px 12.73px;
+  background: #FCD731;
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+}
+
+.source {
+  background: #4A55EA;
+  color: white;
+  padding: 10px 28px 10px 28px;
+  align-self: center;
+  outline: none;
+  border: none;
+  cursor: pointer;
+  border-radius: 10px;
+  width: 107px;
+}
+
+.itemCard {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+}
+
+.Cards {
+  display: flex;
+  flex-wrap: wrap;
+  row-gap: 25px;
+  column-gap: 75px;
+  height: auto;
+  width: 100%;
+}
+
+.justify-center {
+
+  justify-content: center;
+}
+
+.card {
+  width: 156.67px !important;
+  height: 188px !important;
+  box-shadow: 0px 0px 10px 1px rgba(157, 176, 201, 0.75);
+  /* position: static !important; */
+  /* transform: none !important; */
+  box-sizing: border-box;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+
+}
+
+.empty {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  font-size: 20px;
+  color: #787cb0;
+  font-size: 3rem;
+  opacity: 0.5;
+  height: 188px;
+}
+
+.cardImg {
+  max-width: 129.91px !important;
+  height: 129.91px !important;
+
+}
+
+.marginL {
+  margin-left: 10px;
+}
+
+@media screen and (max-width: 1500px) {
+  .main {
+    flex-direction: column;
+    align-items: center;
+  }
+
+}
+
+@media screen and (min-width: 1684px) {
+  .main {
+    flex-direction: column;
+    align-items: center;
+  }
+
+}

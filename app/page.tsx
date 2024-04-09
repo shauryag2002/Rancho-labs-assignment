@@ -1,95 +1,196 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+"use client";
+import React, { useState } from 'react';
+import './home.css';
+import { FaCheck } from "react-icons/fa";
+import { GrPowerReset } from "react-icons/gr";
+interface Item {
+  id: number;
+  name: string;
+  img: string;
+}
 
-export default function Home() {
+interface Items {
+  source1: Item[];
+  source2: Item[];
+  source3: Item[];
+  right: Item[];
+}
+const initialItems: Items = {
+  source1: [
+  ],
+  source2: [],
+  source3: [],
+  right: [{ id: 1, name: "Battery", img: "/9vBattery.png" },
+  { id: 2, name: "AC", img: "/AC.png" },
+  { id: 3, name: "Home Battery", img: "/Home Battery.png" },
+  { id: 4, name: "Nail", img: "/nail.png" },
+  { id: 5, name: "Refrigerator", img: "/Refrigerator.png" },
+  { id: 6, name: "Fan", img: "/Table Fan.png" },
+  { id: 7, name: "Electric Socket", img: "/Wall Outlet.png" },
+  { id: 8, name: "Switch", img: "/Wall Switch.png" },
+  { id: 9, name: "Wire", img: "/Wire.png" }
+  ],
+};
+
+const Home = () => {
+  const [items, setItems] = useState<Items>(initialItems);
+  const onDragStart = (e: React.DragEvent<HTMLDivElement>, sourceId: string, index: number) => {
+    e.dataTransfer.setData('sourceId', sourceId);
+    e.dataTransfer.setData('index', index.toString());
+  };
+  const onDragOver = (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+  };
+
+  const onDrop = (e: React.DragEvent<HTMLDivElement>, targetId: string) => {
+    const sourceId: string = e.dataTransfer.getData('sourceId');
+    const index: number = Number(e.dataTransfer.getData('index'));
+    const item = items[sourceId as keyof Items][index];
+
+    if (sourceId !== targetId) {
+      const updatedSource = items[sourceId as keyof Items].filter((_: Item, i: number) => i != Number(index));
+      const updatedTarget = [...items[targetId as keyof Items], item];
+      console.log(targetId, updatedTarget.length)
+      if (targetId != 'right' && updatedTarget.length > 3) {
+        return
+      }
+      setItems({
+        ...items,
+        [sourceId]: updatedSource,
+        [targetId]: updatedTarget,
+      });
+    }
+  };
+
+  const Reset = () => {
+    setItems(initialItems)
+  }
+  const Check = () => {
+    const source1Class: NodeListOf<Element> = document.querySelectorAll('.source1');
+    items.source1.forEach((item: Item, i: number) => {
+      if (item.name === 'Battery' || item.name === 'Home Battery' || item.name === 'Electric Socket') {
+        source1Class[i]?.classList.add('green')
+      }
+      else {
+        source1Class[i]?.classList.add('red')
+      }
+    })
+    const source2Class: NodeListOf<Element> = document.querySelectorAll('.source2');
+    items.source2.forEach((item: Item, i: number) => {
+      if (item.name === 'AC' || item.name === 'Fan' || item.name === 'Refrigerator') {
+        source2Class[i]?.classList.add('green')
+      }
+      else {
+        source2Class[i]?.classList.add('red')
+      }
+    })
+    const source3Class: NodeListOf<Element> = document.querySelectorAll('.source3');
+    items.source3.forEach((item: Item, i: number) => {
+      if (item.name === 'Nail' || item.name === 'Switch' || item.name === 'Wire') {
+        source3Class[i]?.classList.add('green')
+      }
+      else {
+        source3Class[i]?.classList.add('red')
+      }
+    })
+  }
   return (
-    <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>app/page.tsx</code>
-        </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+    <div className="main">
+      <div className="left">
+        <div className="itemCard">
+          <button className='source marginL'>Source</button>
+          <div
+            className="Cards"
+            onDragOver={(e) => onDragOver(e)}
+            onDrop={(e) => onDrop(e, 'source1')}
           >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
+            {items.source1.map((item: Item, index) => (
+              <div
+                key={item.id}
+                draggable
+                onDragStart={(e) => onDragStart(e, 'source1', index)}
+                className='source1'
+              >
+                <div className="card">
+                  <img src={item.img} className='cardImg' />
+                  <span>{item.name}</span>
+                </div>
+              </div>
+            ))}
+            {items.source1.length === 0 && <div className="empty">Drop Items here...</div>}
+          </div>
+        </div>
+        <div className="itemCard">
+          <button className='source marginL'>Load</button>
+          <div
+            className="Cards"
+            onDragOver={(e) => onDragOver(e)}
+            onDrop={(e) => onDrop(e, 'source2')}
+          >
+            {items.source2.map((item: Item, index) => (
+              <div
+                key={item.id}
+                draggable
+                onDragStart={(e) => onDragStart(e, 'source2', index)}
+                className='source2'
+              >
+                <div className="card">
+                  <img src={item.img} className='cardImg' />
+                  <span>{item.name}</span>
+                </div>
+              </div>
+            ))}
+            {items.source2.length === 0 && <div className="empty">Drop Items here...</div>}
+
+          </div>
+        </div>
+        <div className="itemCard">
+          <button className='source marginL'>Path</button>
+          <div
+            className="Cards"
+            onDragOver={(e) => onDragOver(e)}
+            onDrop={(e) => onDrop(e, 'source3')}
+          >
+            {items.source3.map((item: Item, index) => (
+              <div
+                key={item.id}
+                draggable
+                onDragStart={(e) => onDragStart(e, 'source3', index)}
+                className='source3'
+              >
+                <div className="card">
+                  <img src={item.img} className='cardImg' />
+                  <span>{item.name}</span>
+                </div>
+              </div>
+            ))}
+            {items.source3.length === 0 && <div className="empty">Drop Items here...</div>}
+
+          </div>
         </div>
       </div>
-
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
+      <div className="right" onDrop={(e) => onDrop(e, 'right')} onDragOver={(e) => onDragOver(e)}>
+        <div className="Cards justify-center"  >
+          {items.right.map((item: Item, index) => (
+            <div
+              key={item.id}
+              draggable
+              onDragStart={(e) => onDragStart(e, 'right', index)}
+            >
+              <div className="card">
+                <img src={item.img} className='cardImg' />
+                <span>{item.name}</span>
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
-
-      <div className={styles.grid}>
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Learn <span>-&gt;</span>
-          </h2>
-          <p>Learn about Next.js in an interactive course with&nbsp;quizzes!</p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p>Explore starter templates for Next.js.</p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
+      <div className="buttons">
+        <button className="check" onClick={Check}><FaCheck /> Check</button>
+        <button className="reset" onClick={Reset}><GrPowerReset />Reset</button>
       </div>
-    </main>
+    </div>
   );
-}
+};
+
+export default Home;
